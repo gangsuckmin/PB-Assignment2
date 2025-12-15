@@ -1,0 +1,16 @@
+.movie-row {
+    margin-bottom: 24px;
+}
+.movie-row-list {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+}
+.movie-card {
+    min-width: 140px;
+    cursor: pointer;
+}
+.movie-card img {
+    width: 100%;
+    border-radius: 8px;
+}
