@@ -1,4 +1,4 @@
-# WSD Assignment 02 – Netflix Style Front-End Demo
+# PB Assignment 02 – Netflix Style Front-End Demo
 
 React.js를 활용하여 Netflix 스타일의 **Front-End Demo SPA**를 구현하고,  
 GitHub Pages를 통해 **정적 웹사이트 배포**까지 완료한 프로젝트입니다.
