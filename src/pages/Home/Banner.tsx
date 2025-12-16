@@ -8,21 +8,37 @@ type Props = {
 export default function Banner({ movie }: Props) {
     if (!movie) return null;
 
-    const backdropUrl = movie.backdrop_path
+    const bgUrl = movie.backdrop_path
         ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
-        : "";
+        : null;
 
     return (
-        <div
-            className="banner"
-            style={{ backgroundImage: backdropUrl ? `url(${backdropUrl})` : undefined }}
-        >
-            <div className="banner-content">
-                <h1>{movie.title}</h1>
-                <p>{movie.overview}</p>
-                <button className="play-btn title-btn">재생</button>
-                <button className="info-btn title-btn">상세 정보</button>
+        <section className="hero-banner" aria-label="featured movie banner">
+            <div
+                className="hero-bg"
+                style={bgUrl ? { backgroundImage: `url(${bgUrl})` } : undefined}
+            />
+
+            <div className="hero-content">
+                <h1 className="hero-title">{movie.title}</h1>
+
+                {movie.overview ? (
+                    <p className="hero-overview">{movie.overview}</p>
+                ) : (
+                    <p className="hero-overview hero-overview--empty">
+                        줄거리가 제공되지 않습니다.
+                    </p>
+                )}
+
+                <div className="hero-actions">
+                    <button type="button" className="hero-btn primary" aria-label="play">
+                        ▶ Play
+                    </button>
+                    <button type="button" className="hero-btn secondary" aria-label="more info">
+                        More Info
+                    </button>
+                </div>
             </div>
-        </div>
+        </section>
     );
 }

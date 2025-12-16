@@ -1,210 +1,198 @@
 :root {
-    --container-start-x: -50%;
-    --container-end-x: -90%;
-    --container-start-y: -58%;
-    --container-end-y: -42%;
-    --container-start-color: #ECECEC;
-    --container-end-color: #100f0f;
+    --green: #1fa971;          /* premium emerald green */
+    --green-press: #168f60;    /* active state */
+    --text-dark: #1f2937;
+    --text-muted: #6b7280;
+    --card-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    --bg-dim: rgba(20, 20, 20, 0.78);
 }
 
+/* ===== Background ===== */
 .bg-image {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('https://images.unsplash.com/photo-1507041957456-9c397ce39c97?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    inset: 0;
+    background-image: url("https://images.unsplash.com/photo-1507041957456-9c397ce39c97?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     background-size: cover;
     background-position: center;
 }
 
 .bg-image::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(27, 27, 27, 0.90);
+    inset: 0;
+    background-color: var(--bg-dim);
 }
 
 a {
-    text-decoration:none;
-    margin:0;
+    text-decoration: none;
+    margin: 0;
     padding: 0;
 }
 
+/* ===== Page Centering (여기서만 중앙정렬) ===== */
 .container {
-    height: 100svh;
+    min-height: 100svh;
     width: 100svw;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     z-index: 1;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
+    padding: 24px 16px;
+    box-sizing: border-box;
 }
 
+/* ===== Phone Frame =====
+   ✅ absolute/translate 제거. flex가 중앙 맞춤.
+*/
 #phone {
-    width: 50svw;
-    max-width: 80dvh;
-    max-height: 50dvh;
-    aspect-ratio: 3.35 / 4;
-    border-radius: min(2.5cqw, 2.0cqh);
-    text-align: center;
-    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: min(420px, 92vw);
+    min-height: 520px;
+    border-radius: 18px;
 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-}
 
-
-@media (max-height: 600px) {
-    #phone {
-        transform: translate(-50%, -50%) scale(0.5); /* Scale down on small screens */
-    }
-}
-
-@media (max-height: 400px) {
-    #phone {
-        transform: translate(-50%, -50%) scale(0.3); /* Further scale down */
-    }
+    position: relative; /* 카드들이 이 안에서 absolute로 겹침 */
 }
 
 #content-wrapper {
     width: 100%;
     height: 100%;
-    margin: 0;
-    padding: 0;
-    position:relative;
+    position: relative;
+}
+
+/* ===== Typography / Inputs ===== */
+h1 {
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    margin: 0 0 12px;
+    color: var(--text-dark);
 }
 
 input {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 700;
     color: #000;
     background-color: transparent;
     border: none;
     outline: none;
     width: 100%;
-    height: 2.5rem;
+    height: 2.6rem;
     padding: 0;
     margin: 0;
 }
 
-
-.read-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-indent: 10px; /* 원하는 들여쓰기 크기로 조정하세요 */
-    color: #2b2b2b !important;
-    font-weight: 900;
-}
-
-h1 {
-    font-size:24px;
-    font-weight:800;
-    text-align:center;
-    margin-top:0;
-
-    color:#272727;
-}
-
-button {
-    display:block;
-    border-radius:50px;
-    border:none;
-    width:100%;
-    background-color: #2069ff;
-    color:#fff;
-    padding:17px;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    box-shadow: 0px 10px 30px rgba(23,83,209,0.3);
-    transition: all 0.2s ease;
-}
-
-button:hover {
-    box-shadow: 0px 2px 10px rgba(23,83,209,0.4)
-}
-
 .input {
     position: relative;
-    margin-top: 1.5rem;
-}
-
-.line-active {
-    border-bottom:1px solid #2069ff !important;
-    box-shadow: 0px 1px 0px #2069ff !important;
+    margin-top: 1.35rem;
 }
 
 .input input {
-    background-color: transparent;
-    border: none;
     border-bottom: 1px solid #9e9e9e;
-    border-radius: 0;
-    outline: none;
-    height: 2.5rem;
-    width: 100%;
+    height: 2.6rem;
     font-size: 1rem;
-    padding: 0;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    box-sizing: content-box;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
+}
+
+.line-active {
+    border-bottom: 1px solid var(--green) !important;
+    box-shadow: 0 1px 0 var(--green) !important;
 }
 
 .input label {
-    color: #9e9e9e;
+    color: var(--text-muted);
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     font-size: 1rem;
     cursor: text;
-    transition: transform .2s ease-out;
+    transition: transform 0.2s ease-out, color 0.2s ease-out;
     transform-origin: 0% 100%;
-    text-align: initial;
     transform: translateY(12px);
     pointer-events: none;
 }
 
 .label-active {
-    transform: translateY(-14px) scale(0.8) !important;
+    transform: translateY(-14px) scale(0.82) !important;
     transform-origin: 0 0 !important;
 }
 
-.label-blue {
-    color: #2069ff !important;
+.label-green {
+    color: var(--green) !important;
 }
 
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+.active > label {
+    color: rgba(0, 0, 0, 0);
+}
+
+/* ===== Buttons ===== */
+button {
+    display: block;
+    border-radius: 999px;
+    border: none;
+    width: 100%;
+    background: linear-gradient(180deg, var(--green), var(--green-press));
+    color: #fff;
+    padding: 14px 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    box-shadow: 0 10px 26px rgba(31,169,113,0.35);
+    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease;
+}
+
+button:hover {
+    box-shadow: 0 6px 18px rgba(31,169,113,0.45);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+    filter: brightness(0.96);
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ===== Checkbox ===== */
+.read-text {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-indent: 10px;
+    color: #2b2b2b !important;
+    font-weight: 900;
+    font-size: 0.95rem;
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
     position: absolute;
     opacity: 0;
     pointer-events: none;
 }
 
-[type="checkbox"]+label {
+[type="checkbox"] + label {
     position: relative;
     padding-left: 25px;
     cursor: pointer;
     display: inline-block;
     height: 25px;
     line-height: 22px;
-    font-size: 1rem;
     user-select: none;
 }
 
-[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
-    content: '';
+[type="checkbox"] + label:before,
+[type="checkbox"]:not(.filled-in) + label:after {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -214,183 +202,149 @@ button:hover {
     border: 2px solid #5a5a5a;
     border-radius: 3px;
     margin-top: 2px;
-    transition: .2s;
+    transition: 0.2s;
 }
 
-[type="checkbox"]:not(.filled-in)+label:after {
+[type="checkbox"]:not(.filled-in) + label:after {
     border: 0;
     transform: scale(0);
 }
 
-[type="checkbox"]:checked+label:before {
+[type="checkbox"]:checked + label:before {
     top: -4px;
     left: -5px;
     width: 12px;
     height: 22px;
     border-top: 2px solid transparent;
     border-left: 2px solid transparent;
-    border-right: 2px solid #2069ff;
-    border-bottom: 2px solid #2069ff;
+    border-right: 2px solid var(--green);
+    border-bottom: 2px solid var(--green);
     transform: rotate(40deg);
-    backface-visibility: hidden;
     transform-origin: 100% 100%;
     border-radius: 1px;
 }
 
 .checkbox {
-    margin-top:2rem;
-    display:block;
-    margin-bottom:2rem;
+    margin-top: 1.6rem;
+    display: block;
+    margin-bottom: 1.6rem;
 }
 
 .remember {
-    float:left;
+    display: flex;
+    justify-content: flex-start;
 }
 
-.forgot {
-    float:right;
-}
-
-.forgot a {
-    text-decoration:none;
-    color:#000;
-    font-weight:900;
-    line-height: 22px;
-}
-
+/* ===== Cards =====
+   ✅ 여기서 좌우정렬/translate 절대 안함
+*/
 .card {
-    border-radius:10px;
-    width:100%;
-    max-width: 800px;
-    position:absolute;
-    background-color:white;
-    padding:27px 30px 46px 30px;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.16);
-    transition: all 0.4s 0.1s ease;
+    width: 100%;
+    border-radius: 14px;
+    background-color: #fff;
 
-    top: 50%;
+    padding: 26px 28px 54px;
+    box-shadow: var(--card-shadow);
 
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    transition: all 0.35s ease;
 }
 
 .card form {
-    transform:translateX(0px);
-    transition: all 0.3s 0.4s ease;
-}
-
-#login {
-    z-index:2;
-    top: 5svh;
-}
-
-#register {
-    z-index:2;
-    top: 5svh;
-}
-
-.account-check {
-    width:100%;
-    text-align:center;
-    position:absolute;
-    bottom:15px;
-    left:0;
-    opacity:0;
-    text-decoration:none;
-    visibility:hidden;
-    color:#fff;
-    padding:10px;
-    transition: all 0.2s ease;
-}
-
-.account-check:active {
-    color:#000;
-    transform: translateY(2px);
-}
-
-#register.hidden {
-    top:calc(5svh + 90px) !important;
-    z-index:1;
-}
-
-#login.hidden {
-    top:calc(5svh + 220px) !important;
-    z-index:1;
-}
-
-.card.hidden {
-    background-color:#2069ff;
-    box-shadow: 0px 20px 40px rgba(23,83,209,0.8);
-    padding:0px 30px 0px 30px;
-
-}
-
-#register.hidden form {
-    transform:translateX(20px);
-}
-
-#login.hidden form {
-    transform:translateX(-20px);
-}
-
-.hidden form {
-    opacity:0;
     transition: all 0.3s ease;
 }
 
-.hidden .account-check {
-    opacity:1;
-    visibility:visible;
-    z-index:2;
+/* login/register stacking (hidden card must be behind, otherwise it covers buttons) */
+#login { z-index: 2; }
+#register { z-index: 2; }
+
+/* when a card is hidden, push it down a bit and place it behind */
+#register.hidden {
+  z-index: 1;
+  top: 90px;
+}
+
+#login.hidden {
+  z-index: 1;
+  top: 220px;
+}
+
+/* bottom link */
+.account-check {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    color: #fff;
+    padding: 10px 12px;
     transition: all 0.2s ease;
 }
 
-.register-swap {
-    animation: register-swap 0.5s ease forwards;
+.hidden .account-check {
+    opacity: 1;
+    visibility: visible;
 }
 
-.login-swap {
-    animation: login-swap 0.5s ease forwards;
+.account-check b {
+    color: #fff;
 }
 
-.active > label {
-    color: rgba(0, 0, 0, 0);
+/* hidden state */
+.card.hidden {
+    background: linear-gradient(180deg, var(--green), var(--green-press));
+    box-shadow: 0 18px 40px rgba(23, 83, 209, 0.60);
+    padding: 10px 28px 40px;
 }
+
+.hidden form {
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+/* swap animations */
+.register-swap { animation: register-swap 0.5s ease forwards; }
+.login-swap { animation: login-swap 0.5s ease forwards; }
 
 @keyframes register-swap {
-    0% {transform: translate(0%, 0%)}
-    50% {transform: translate(30%, 0%);}
-    0% {transform: translate(0%, 0%)}
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(18px); }
+    100% { transform: translateX(0); }
 }
 
 @keyframes login-swap {
-    0% {transform: translate(0%, 0%)}
-    50% {transform: translate(-70%, 0%);}
-    0% {transform: translate(0%, 0%)}
+    0%   { transform: translateX(0); }
+    50%  { transform: translateX(-18px); }
+    100% { transform: translateX(0); }
 }
 
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
+    #phone {
+        width: min(380px, 92vw);
+        min-height: 520px;
+    }
+
+    h1 { font-size: 22px; }
+
+    .card {
+        padding: 22px 20px 52px;
+    }
+}
+
+@media (max-height: 620px) {
+    .container {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
 
     #phone {
-        width: 70%;
-        transform: translate(-50%, -70%) scale(1); /* Scale down on small screens */
-    }
-
-    #login {
-        top: -2svh !important;
-    }
-
-    #register {
-        top: -2svh !important;
-    }
-
-    #register.hidden {
-        top:calc(5svh + 90px) !important;
-        z-index:1;
-    }
-
-    #login.hidden {
-        top:calc(5svh + 90px) !important;
-        z-index:1;
+        min-height: 480px;
     }
 }

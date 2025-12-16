@@ -9,39 +9,43 @@ export default function HomePopular() {
     const [currentView, setCurrentView] = useState<"grid" | "list">("grid");
 
     useEffect(() => {
-        document.body.style.overflow = currentView === "grid" ? "hidden" : "auto";
+        document.body.style.overflow = "auto";
         return () => {
             document.body.style.overflow = "auto";
         };
-    }, [currentView]);
+    }, []);
 
     const fetchUrl = useMemo(() => {
         return urls.popular(apiKey, 1);
     }, [apiKey]);
 
     return (
-        <div className={`popular-container view-${currentView}`}>
+        <div className={`popular-container ${currentView}`}>
+            {/* 🔘 View Toggle */}
             <div className="view-toggle">
                 <button
+                    type="button"
                     onClick={() => setCurrentView("grid")}
-                    className={currentView === "grid" ? "active" : ""}
-                    aria-label="grid view"
+                    className={`toggle-btn grid-btn ${
+                        currentView === "grid" ? "active" : ""
+                    }`}
                 >
-                    ⬛⬜
+                    ▦
                 </button>
 
                 <button
+                    type="button"
                     onClick={() => setCurrentView("list")}
-                    className={currentView === "list" ? "active" : ""}
-                    aria-label="list view"
+                    className={`toggle-btn list-btn ${
+                        currentView === "list" ? "active" : ""
+                    }`}
                 >
                     ☰
                 </button>
             </div>
 
-            {currentView === "grid" && (
-                <MovieGrid title="인기 영화" fetchUrl={fetchUrl} />
-            )}
+            {/* ❌ title 제거 */}
+            {currentView === "grid" && <MovieGrid fetchUrl={fetchUrl} />}
 
             {currentView === "list" && (
                 <MovieInfiniteScroll

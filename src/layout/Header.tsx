@@ -24,7 +24,7 @@ export default function Header() {
     // Angular removeKey() 대응: 로그아웃(로컬스토리지 정리) + /signin 이동
     const removeKey = () => {
         localStorage.removeItem("TMDb-Key");
-        localStorage.removeItem("auth"); // 너 useAuth에서 쓰는 키가 auth면 유지
+        localStorage.removeItem("auth"); // useAuth에서 쓰는 키가 auth면 유지
         setIsMobileMenuOpen(false);
         navigate("/signin", { replace: true });
     };
@@ -34,19 +34,44 @@ export default function Header() {
             <header className={`app-header ${isScrolled ? "scrolled" : ""}`}>
                 <div className="header-left">
                     <div className="logo">
-                        <Link to="/">
+                        <Link to="/" aria-label="home">
                             {/* FontAwesome 쓰면 아래로 교체 */}
                             {/* <FontAwesomeIcon icon={faTicket} style={{ height: "100%", color: "#E50914" }} /> */}
                             <span style={{ color: "#E50914", fontWeight: 900 }}>🎟</span>
                         </Link>
                     </div>
 
-                    <nav className="nav-links desktop-nav">
+                    <nav className="nav-links desktop-nav" aria-label="primary">
                         <ul>
-                            <li><NavLink to="/">홈</NavLink></li>
-                            <li><NavLink to="/popular">대세 콘텐츠</NavLink></li>
-                            <li><NavLink to="/wishlist">내가 찜한 리스트</NavLink></li>
-                            <li><NavLink to="/search">찾아보기</NavLink></li>
+                            <li>
+                                <NavLink to="/" className={({ isActive }) => (isActive ? "active" : "")}>
+                                    홈
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/popular"
+                                    className={({ isActive }) => (isActive ? "active" : "")}
+                                >
+                                    대세 콘텐츠
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/wishlist"
+                                    className={({ isActive }) => (isActive ? "active" : "")}
+                                >
+                                    내가 찜한 리스트
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/search"
+                                    className={({ isActive }) => (isActive ? "active" : "")}
+                                >
+                                    찾아보기
+                                </NavLink>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -78,7 +103,11 @@ export default function Header() {
                 <nav>
                     <ul>
                         <li>
-                            <NavLink to="/" onClick={toggleMobileMenu}>
+                            <NavLink
+                                to="/"
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) => (isActive ? "active" : "")}
+                            >
                                 홈
                             </NavLink>
                         </li>
@@ -92,12 +121,20 @@ export default function Header() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/wishlist" onClick={toggleMobileMenu}>
+                            <NavLink
+                                to="/wishlist"
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) => (isActive ? "active" : "")}
+                            >
                                 내가 찜한 리스트
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/search" onClick={toggleMobileMenu}>
+                            <NavLink
+                                to="/search"
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) => (isActive ? "active" : "")}
+                            >
                                 찾아보기
                             </NavLink>
                         </li>
