@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import RequireAuth from "./RequireAuth";
 import Layout from "../layout/Layout";
 
@@ -25,6 +25,9 @@ export default function AppRouter() {
                 <Route path="/search" element={<Search />} />
                 <Route path="/wishlist" element={<Wishlist />} />
             </Route>
+
+            {/* ✅ 매칭 실패 시 홈으로 */}
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     );
 }

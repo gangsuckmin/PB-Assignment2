@@ -5,7 +5,7 @@ import AppRouter from "./router/AppRouter";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
             <AppRouter />
         </BrowserRouter>
     </React.StrictMode>
