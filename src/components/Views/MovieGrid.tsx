@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import type { Movie } from "../../types/movie";
 import { useWishlist } from "../../hooks/useWishlist";
@@ -6,10 +6,10 @@ import "./MovieGrid.css";
 
 type Props = {
     fetchUrl: string;
-    title?: string;
+    title?: string; // HomePopular에서 넘기고 있으니 optional로 받아줌
 };
 
-export default function MovieGrid({ fetchUrl, title }: Props) {
+export default function MovieGrid({ fetchUrl }: Props) {
     const gridRef = useRef<HTMLDivElement | null>(null);
     const { toggleWishlist, isInWishlist } = useWishlist();
 
@@ -21,7 +21,26 @@ export default function MovieGrid({ fetchUrl, title }: Props) {
 
     const wishlistTimer = useRef<number | null>(null);
 
-    /* ===== fetchMovies (Angular fetchMovies 그대로) ===== */
+    // ✅ useCallback으로 고정 → exhaustive-deps 경고 제거
+    const calculateLayout = useCallback(() => {
+        if (!gridRef.current) return;
+
+        const containerWidth = gridRef.current.offsetWidth;
+        const containerHeight = window.innerHeight - gridRef.current.offsetTop;
+
+        const movieCardWidth = isMobile ? 90 : 200;
+        const movieCardHeight = isMobile ? 150 : 220;
+        const horizontalGap = isMobile ? 10 : 15;
+        const verticalGap = -10;
+
+        const rs = Math.max(1, Math.floor(containerWidth / (movieCardWidth + horizontalGap)));
+        const maxRows = Math.max(1, Math.floor(containerHeight / (movieCardHeight + verticalGap)));
+
+        setRowSize(rs);
+        setMoviesPerPage(rs * maxRows);
+    }, [isMobile]);
+
+    /* ===== fetchMovies ===== */
     useEffect(() => {
         let alive = true;
 
@@ -36,9 +55,7 @@ export default function MovieGrid({ fetchUrl, title }: Props) {
                     all = [...all, ...res.data.results];
                 }
 
-                if (alive) {
-                    setMovies(all.slice(0, totalMoviesNeeded));
-                }
+                if (alive) setMovies(all.slice(0, totalMoviesNeeded));
             } catch (e) {
                 console.error("Error fetching movies:", e);
             }
@@ -50,41 +67,28 @@ export default function MovieGrid({ fetchUrl, title }: Props) {
         };
     }, [fetchUrl]);
 
-    /* ===== resize / calculateLayout ===== */
+    /* ===== resize / layout ===== */
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
-            calculateLayout();
         };
 
         window.addEventListener("resize", handleResize);
+
+        // 최초 계산
         calculateLayout();
 
         return () => {
             window.removeEventListener("resize", handleResize);
             if (wishlistTimer.current) clearTimeout(wishlistTimer.current);
         };
-    }, []);
+    }, [calculateLayout]);
 
-    const calculateLayout = () => {
-        if (!gridRef.current) return;
+    // isMobile 값 바뀌면 레이아웃 재계산
+    useEffect(() => {
+        calculateLayout();
+    }, [isMobile, calculateLayout]);
 
-        const containerWidth = gridRef.current.offsetWidth;
-        const containerHeight = window.innerHeight - gridRef.current.offsetTop;
-
-        const movieCardWidth = isMobile ? 90 : 200;
-        const movieCardHeight = isMobile ? 150 : 220;
-        const horizontalGap = isMobile ? 10 : 15;
-        const verticalGap = -10;
-
-        const rs = Math.max(1, Math.floor(containerWidth / (movieCardWidth + horizontalGap)));
-        const maxRows = Math.floor(containerHeight / (movieCardHeight + verticalGap));
-
-        setRowSize(rs);
-        setMoviesPerPage(rs * maxRows);
-    };
-
-    /* ===== visibleMovieGroups (Angular getter 그대로) ===== */
     const visibleMovieGroups = useMemo(() => {
         const start = (currentPage - 1) * moviesPerPage;
         const end = start + moviesPerPage;
@@ -100,17 +104,13 @@ export default function MovieGrid({ fetchUrl, title }: Props) {
 
     const totalPages = Math.ceil(movies.length / moviesPerPage);
 
-    /* ===== wishlist ===== */
     const onToggleWishlist = (movie: Movie) => {
         if (wishlistTimer.current) clearTimeout(wishlistTimer.current);
-        wishlistTimer.current = window.setTimeout(() => {
-            toggleWishlist(movie);
-        }, 2000);
+        wishlistTimer.current = window.setTimeout(() => toggleWishlist(movie), 2000);
     };
 
     return (
         <div className="movie-grid" ref={gridRef}>
-            {title && <h2 className="movie-grid-title">{title}</h2>}
             <div className="grid-container grid">
                 {visibleMovieGroups.map((group, i) => (
                     <div className="movie-row" key={i}>
@@ -123,12 +123,10 @@ export default function MovieGrid({ fetchUrl, title }: Props) {
                                 <img
                                     src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                                     alt={movie.title}
+                                    loading="lazy"
                                 />
                                 <div className="movie-title">{movie.title}</div>
-
-                                {isInWishlist(movie.id) && (
-                                    <div className="wishlist-indicator">👍</div>
-                                )}
+                                {isInWishlist(movie.id) && <div className="wishlist-indicator">👍</div>}
                             </div>
                         ))}
                     </div>
@@ -143,7 +141,7 @@ export default function MovieGrid({ fetchUrl, title }: Props) {
                     >
                         &lt; 이전
                     </button>
-                    <span>
+                    <span className="page-indicator">
             {currentPage} / {totalPages}
           </span>
                     <button

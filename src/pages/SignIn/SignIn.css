@@ -308,6 +308,12 @@ button:disabled {
     transform: translateY(6px);
 }
 
+.account-check {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 /* swap animations */
 .register-swap { animation: register-swap 0.5s ease forwards; }
 .login-swap { animation: login-swap 0.5s ease forwards; }

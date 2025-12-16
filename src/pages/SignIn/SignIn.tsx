@@ -143,9 +143,13 @@ export default function SignIn()
                                 <button type="submit" disabled={!isLoginFormValid}>Login</button>
                             </form>
 
-                            <a href="#" className="account-check" onClick={(e) => { e.preventDefault(); toggleCard(); }}>
+                            <button
+                                type="button"
+                                className="account-check"
+                                onClick={toggleCard}
+                            >
                                 Already an account? <b>Sign in</b>
-                            </a>
+                            </button>
                         </div>
 
                         {/* REGISTER */}
@@ -207,9 +211,13 @@ export default function SignIn()
                                 <button type="submit" disabled={!isRegisterFormValid}>Register</button>
                             </form>
 
-                            <a href="#" className="account-check" onClick={(e) => { e.preventDefault(); toggleCard(); }}>
+                            <button
+                                type="button"
+                                className="account-check"
+                                onClick={toggleCard}
+                            >
                                 Don't have an account? <b>Sign up</b>
-                            </a>
+                            </button>
                         </div>
 
                     </div>
