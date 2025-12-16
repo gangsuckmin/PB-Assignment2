@@ -55,7 +55,7 @@ export default function HomeSearch() {
     };
 
     return (
-        <div className="container-search">
+        <div className="container-search home-search">
             <div className="container-search-bar">
                 <MovieSearch onChangeOptions={changeOptions} />
             </div>

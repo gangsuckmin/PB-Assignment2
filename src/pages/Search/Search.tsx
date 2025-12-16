@@ -1,4 +1,5 @@
-export default function Search()
-{
-    return <div className="page">Search (필터 UI 예정)</div>;
+import HomeSearch from "../Home/Sections/HomeSearch";
+
+export default function Search() {
+  return <HomeSearch />;
 }

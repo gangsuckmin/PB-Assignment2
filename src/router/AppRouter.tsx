@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RequireAuth from "./RequireAuth";
+import Layout from "../layout/Layout";
+
 import SignIn from "../pages/SignIn/SignIn";
 import Home from "../pages/Home/Home";
 import Popular from "../pages/Popular/Popular";
@@ -12,10 +14,19 @@ export default function AppRouter()
         <BrowserRouter>
             <Routes>
                 <Route path="/signin" element={<SignIn />} />
-                <Route path="/" element={<RequireAuth><Home /></RequireAuth>} />
-                <Route path="/popular" element={<RequireAuth><Popular /></RequireAuth>} />
-                <Route path="/search" element={<RequireAuth><Search /></RequireAuth>} />
-                <Route path="/wishlist" element={<RequireAuth><Wishlist /></RequireAuth>} />
+
+                <Route
+                    element={
+                        <RequireAuth>
+                            <Layout />
+                        </RequireAuth>
+                    }
+                >
+                    <Route path="/" element={<Home />} />
+                    <Route path="/popular" element={<Popular />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/wishlist" element={<Wishlist />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );

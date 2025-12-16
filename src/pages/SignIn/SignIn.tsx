@@ -70,21 +70,22 @@ export default function SignIn()
         }
     };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         try {
-            login(email, password, rememberMe);
+            await Promise.resolve(login(email, password, rememberMe));
             navigate("/", { replace: true });
-        } catch (e) {
-            alert("Login failed");
+        } catch (e: any) {
+            alert(e?.message || "Login failed");
         }
     };
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         try {
-            register(registerEmail, registerPassword, acceptTerms);
+            await Promise.resolve(register(registerEmail, registerPassword, acceptTerms));
+            // 성공 시 로그인 화면으로 전환
             toggleCard();
         } catch (e: any) {
-            alert(e.message || "Register failed");
+            alert(e?.message || "Register failed");
         }
     };
 
@@ -98,7 +99,7 @@ export default function SignIn()
 
                         {/* LOGIN */}
                         <div id="login" className={`card ${isLoginVisible ? "" : "hidden"}`}>
-                            <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+                            <form onSubmit={async (e) => { e.preventDefault(); await handleLogin(); }}>
                                 <h1>Sign in</h1>
 
                                 <div className={`input ${(isEmailFocused || email) ? "active" : ""}`}>
@@ -130,15 +131,16 @@ export default function SignIn()
                                 </div>
 
                                 <span className="checkbox remember">
-                  <input
-                      type="checkbox"
-                      checked={rememberMe}
-                      onChange={(e) => setRememberMe(e.target.checked)}
-                  />
-                  <label className="read-text">Remember me</label>
-                </span>
+                                  <input
+                                    id="remember"
+                                    type="checkbox"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                  />
+                                  <label htmlFor="remember" className="read-text">Remember me</label>
+                                </span>
 
-                                <button disabled={!isLoginFormValid}>Login</button>
+                                <button type="submit" disabled={!isLoginFormValid}>Login</button>
                             </form>
 
                             <a href="#" className="account-check" onClick={(e) => { e.preventDefault(); toggleCard(); }}>
@@ -148,7 +150,7 @@ export default function SignIn()
 
                         {/* REGISTER */}
                         <div id="register" className={`card ${isLoginVisible ? "hidden" : ""}`}>
-                            <form onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
+                            <form onSubmit={async (e) => { e.preventDefault(); await handleRegister(); }}>
                                 <h1>Sign up</h1>
 
                                 <div className={`input ${(isRegisterEmailFocused || registerEmail) ? "active" : ""}`}>
@@ -191,17 +193,18 @@ export default function SignIn()
                                 </div>
 
                                 <span className="checkbox remember">
-                  <input
-                      type="checkbox"
-                      checked={acceptTerms}
-                      onChange={(e) => setAcceptTerms(e.target.checked)}
-                  />
-                  <label className="read-text">
-                    I have read <b>Terms and Conditions</b>
-                  </label>
-                </span>
+                                  <input
+                                    id="terms"
+                                    type="checkbox"
+                                    checked={acceptTerms}
+                                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                                  />
+                                  <label htmlFor="terms" className="read-text">
+                                    I have read <b>Terms and Conditions</b>
+                                  </label>
+                                </span>
 
-                                <button disabled={!isRegisterFormValid}>Register</button>
+                                <button type="submit" disabled={!isRegisterFormValid}>Register</button>
                             </form>
 
                             <a href="#" className="account-check" onClick={(e) => { e.preventDefault(); toggleCard(); }}>

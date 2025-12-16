@@ -1,4 +1,26 @@
-.movie-card.wished
-{
-    outline: 2px solid #2069ff;
+.movie-card.wished {
+  outline: none;
+}
+
+.movie-card.wished .movie-card__imgWrap {
+  outline: 2px solid rgba(229, 9, 20, 0.6);
+  box-shadow: 0 0 12px rgba(229, 9, 20, 0.45);
+}
+
+.movie-card {
+  transition: transform 0.18s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.03);
+}
+
+.movie-card__imgWrap {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.movie-card__title {
+  margin-top: 6px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
 }

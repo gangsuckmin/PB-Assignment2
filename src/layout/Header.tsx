@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import "./Header.css";
 
 // FontAwesome 쓰면 아래 주석 해제해서 사용
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -76,15 +77,30 @@ export default function Header() {
 
                 <nav>
                     <ul>
-                        <li><Link to="/" onClick={toggleMobileMenu}>홈</Link></li>
-                        <NavLink
-                            to="/popular"
-                            className={({ isActive }) => (isActive ? "active" : "")}
-                        >
-                            대세 콘텐츠
-                        </NavLink>
-                        <li><Link to="/wishlist" onClick={toggleMobileMenu}>내가 찜한 리스트</Link></li>
-                        <li><Link to="/search" onClick={toggleMobileMenu}>찾아보기</Link></li>
+                        <li>
+                            <NavLink to="/" onClick={toggleMobileMenu}>
+                                홈
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="/popular"
+                                onClick={toggleMobileMenu}
+                                className={({ isActive }) => (isActive ? "active" : "")}
+                            >
+                                대세 콘텐츠
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/wishlist" onClick={toggleMobileMenu}>
+                                내가 찜한 리스트
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/search" onClick={toggleMobileMenu}>
+                                찾아보기
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             </div>

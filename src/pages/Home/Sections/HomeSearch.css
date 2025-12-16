@@ -1,19 +1,52 @@
+/* ===== Search Page (HomeSearch) ===== */
+.home-search {
+    padding: 80px 4% 40px; /* header offset */
+    min-height: 100vh;
+}
+
 .container-search {
-    margin-top: 50px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    width: 100%;
 }
 
+/* Search bar area */
 .container-search-bar {
-    width: 100%;
-    position: relative;
-    display: flex;
-    justify-content: right;
-    margin-top: 10px;
+    position: sticky;
+    top: 60px; /* below header */
+    z-index: 900;
+    padding: 14px 0 12px;
+    margin-bottom: 14px;
+    background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.92),
+            rgba(0, 0, 0, 0.65),
+            rgba(0, 0, 0, 0)
+    );
+    backdrop-filter: blur(8px);
 }
 
+/* The filtering results area */
 .content-search {
-    width: 100%;
+    margin-top: 6px;
+}
+
+/* Make infinite-scroll look nicer inside Search */
+.home-search .movie-row {
+    gap: 12px;
+}
+
+/* If MovieInfiniteScroll uses .top-button, keep it visible */
+.home-search .top-button {
+    right: 16px;
+    bottom: 18px;
+}
+
+@media (max-width: 768px) {
+    .home-search {
+        padding: 70px 12px 30px;
+    }
+
+    .container-search-bar {
+        top: 52px;
+        padding: 10px 0 10px;
+    }
 }

@@ -1,76 +1,124 @@
+/* ===== MovieSearch (Filter Bar) ===== */
+
 .dropdown-container {
-    margin-top: 0;
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
     align-items: center;
-    gap: 15px;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
 }
 
+.dropdown-container > label {
+    width: 100%;
+    color: #e5e5e5;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+/* ===== Custom Select ===== */
+
 .custom-select {
-    min-width: 120px;
     position: relative;
-    display: inline-block;
+    min-width: 180px;
+    flex: 1 1 220px;
 }
 
 .select-selected {
-    background-color: black;
-    color: white;
-    padding: 10px;
-    border: 1px solid #fff;
-    font-size: 16px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.15s ease;
 }
 
+.select-selected::after {
+    content: "▾";
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.select-selected:hover {
+    background: rgba(0, 0, 0, 0.55);
+    transform: translateY(-1px);
+}
+
+.select-selected.select-arrow-active {
+    border-color: rgba(229, 9, 20, 0.8);
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.15);
+}
+
+/* ===== Dropdown Items ===== */
+
 .select-items {
-    display: block;
     position: absolute;
-    background-color: #333;
-    border: 1px solid #fff;
-    z-index: 99;
-    top: 100%;
+    top: calc(100% + 8px);
     left: 0;
     right: 0;
+    background: rgba(20, 20, 20, 0.98);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    z-index: 50;
+    max-height: 260px;
+    overflow-y: auto;
 }
 
 .select-items div {
-    color: white;
-    padding: 10px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #e5e5e5;
     cursor: pointer;
+    transition: background 0.12s ease;
 }
 
 .select-items div:hover {
-    background-color: #575757;
+    background: rgba(229, 9, 20, 0.2);
 }
 
-.select-arrow-active:after {
-    content: "\25B2";
-    position: absolute;
-    right: 10px;
-    top: 14px;
-}
-
-.select-selected:after {
-    content: "\25BC";
-    position: absolute;
-    right: 10px;
-    top: 14px;
-}
-
-.select-selected.select-arrow-active:after {
-    content: "\25B2";
-}
+/* ===== Clear Button ===== */
 
 .clear-options {
-    min-width: 120px;
-    background-color: black;
-    color: white;
-    padding: 10px;
-    border: 1px solid #fff;
-    font-size: 16px;
+    margin-left: auto;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.3s;
-    border-radius: 0 !important;
+    transition: all 0.15s ease;
 }
 
 .clear-options:hover {
-    background-color: #333;
+    background: rgba(229, 9, 20, 0.8);
+    border-color: rgba(229, 9, 20, 0.9);
+    transform: translateY(-1px);
+}
+
+/* ===== Mobile ===== */
+
+@media (max-width: 768px) {
+    .custom-select {
+        min-width: 140px;
+        flex: 1 1 160px;
+    }
+
+    .clear-options {
+        width: 100%;
+        margin-left: 0;
+    }
 }

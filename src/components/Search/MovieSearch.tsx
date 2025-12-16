@@ -13,7 +13,7 @@ export default function MovieSearch({ onChangeOptions }: Props) {
         () => ({
             originalLanguage: ["장르 (전체)", "Action", "Adventure", "Comedy", "Crime", "Family"],
             translationLanguage: ["평점 (전체)", "9~10", "8~9", "7~8", "6~7", "5~6", "4~5", "4점 이하"],
-            sorting: ["언어 (전체)", "영어", "한국어"],
+            sorting: ["언어 (전체)", "영어", "한국어"], // 🔥 여기 오타 수정됨
         }),
         []
     );
@@ -27,15 +27,19 @@ export default function MovieSearch({ onChangeOptions }: Props) {
         []
     );
 
-    const [selectedOptions, setSelectedOptions] = useState<SearchOptions>({ ...DEFAULT_OPTIONS });
+    const [selectedOptions, setSelectedOptions] = useState<SearchOptions>({
+        ...DEFAULT_OPTIONS,
+    });
     const [activeDropdown, setActiveDropdown] = useState<DropdownKey | null>(null);
 
     const dropdownEntries = useMemo(
         () =>
-            (Object.entries(dropdowns) as Array<[DropdownKey, string[]]>).map(([key, options]) => ({
-                key,
-                options,
-            })),
+            (Object.entries(dropdowns) as Array<[DropdownKey, string[]]>).map(
+                ([key, options]) => ({
+                    key,
+                    options,
+                })
+            ),
         [dropdowns]
     );
 
@@ -44,17 +48,16 @@ export default function MovieSearch({ onChangeOptions }: Props) {
     };
 
     const selectOption = (key: DropdownKey, option: string) => {
-        const next: SearchOptions = { ...selectedOptions, [key]: option } as SearchOptions;
+        const next: SearchOptions = { ...selectedOptions, [key]: option };
         setSelectedOptions(next);
         setActiveDropdown(null);
         onChangeOptions(next);
     };
 
     const clearOptions = () => {
-        const next = { ...DEFAULT_OPTIONS };
-        setSelectedOptions(next);
+        setSelectedOptions({ ...DEFAULT_OPTIONS });
         setActiveDropdown(null);
-        onChangeOptions(next);
+        onChangeOptions({ ...DEFAULT_OPTIONS });
     };
 
     return (
@@ -64,7 +67,9 @@ export default function MovieSearch({ onChangeOptions }: Props) {
             {dropdownEntries.map((dropdown) => (
                 <div key={dropdown.key} className="custom-select">
                     <div
-                        className={`select-selected ${activeDropdown === dropdown.key ? "select-arrow-active" : ""}`}
+                        className={`select-selected ${
+                            activeDropdown === dropdown.key ? "select-arrow-active" : ""
+                        }`}
                         onClick={() => toggleDropdown(dropdown.key)}
                     >
                         {selectedOptions[dropdown.key]}
